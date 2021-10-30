@@ -5,7 +5,10 @@
 const recipes = [
   'https://introweb.tech/assets/json/ghostCookies.json',
   'https://introweb.tech/assets/json/birthdayCake.json',
-  'https://introweb.tech/assets/json/chocolateChip.json'
+  'https://introweb.tech/assets/json/chocolateChip.json',
+  '/assets/recipes/Banana.json',
+  '/assets/recipes/Brownie.json',
+  '/assets/recipes/GrilledCheese.json'
 ];
 
 // Once all of the recipes that were specified above have been fetched, their
@@ -25,6 +28,7 @@ async function init() {
     return;
   };
   // Add the first three recipe cards to the page
+  console.log(recipeData);
   createRecipeCards();
   // Make the "Show more" button functional
   bindShowMore();
@@ -43,6 +47,16 @@ async function fetchRecipes() {
     // in the recipes folder and fetch them from there. You'll need to add their paths to the recipes array.
 
     // Part 1 Expose - TODO
+    async function helper(){
+      for(let i = 0; i < recipes.length; i++){
+        let url = recipes[i];
+        let response = await fetch(url);
+        let data = await response.json();
+        recipeData[url] = data;
+      }
+      resolve(true);
+    }
+    helper();
   });
 }
 
@@ -54,6 +68,28 @@ function createRecipeCards() {
   // show any others you've added when the user clicks on the "Show more" button.
 
   // Part 1 Expose - TODO
+  
+  for(let i = 0; i < 3; i++){
+    let element = document.createElement('recipe-card');
+    let json = recipes[i];
+    element.data = recipeData[json];
+
+    let main = document.querySelector('main');
+    console.log(main);
+    main.appendChild(element);
+  }
+}
+
+function secondHalf(){
+  for(let i = 0; i < 3; i++){
+    let element = document.createElement('recipe-card');
+    let json = recipes[i+3];
+    element.data = recipeData[json];
+
+    let main = document.querySelector('main');
+    console.log(main);
+    main.appendChild(element);
+  }
 }
 
 function bindShowMore() {
@@ -65,4 +101,22 @@ function bindShowMore() {
   // in the recipeData object where you stored them/
 
   // Part 2 Explore - TODO
+  let button = document.querySelector('button');
+  button.addEventListener('click', function(){
+    let allRecipes = document.getElementsByTagName('recipe-card');
+    let firstToLast = allRecipes[allRecipes.length-1];
+    let secondToLast = allRecipes[allRecipes.length-2];
+    let thirdToLast = allRecipes[allRecipes.length-3];
+    if(button.innerHTML == 'Show more'){
+      button.innerHTML = 'Show less';
+      secondHalf();
+    }
+    else if(button.innerHTML == 'Show less'){
+      button.innerHTML = 'Show more';
+      firstToLast.style.display = "none";
+      secondToLast.style.display = "none";
+      thirdToLast.style.display = "none";
+    }
+    
+  });
 }

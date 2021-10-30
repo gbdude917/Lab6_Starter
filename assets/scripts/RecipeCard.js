@@ -3,6 +3,8 @@ class RecipeCard extends HTMLElement {
     // Part 1 Expose - TODO
 
     // You'll want to attach the shadow DOM here
+    super();
+    this.attachShadow({mode: 'open'});
   }
 
   set data(data) {
@@ -100,6 +102,103 @@ class RecipeCard extends HTMLElement {
     // created in the constructor()
 
     // Part 1 Expose - TODO
+
+    // Add the img element
+    let img = document.createElement('img');
+    img.src = searchForKey(data, 'thumbnailUrl');
+    img.alt = searchForKey(data, 'headline');
+    card.appendChild(img);
+
+    // Add the title <p> element
+    let title = document.createElement('p');
+    title.classList.add('title');
+    
+    let anchor = document.createElement('a');
+    anchor.href = getUrl(data);
+    anchor.innerHTML = searchForKey(data, 'headline');
+    title.appendChild(anchor); 
+
+    card.appendChild(title);
+
+    // Add the organizaiton <p> element
+    let organization = document.createElement('p');
+    organization.classList.add('organization');
+    organization.innerHTML = getOrganization(data);
+
+    card.appendChild(organization);
+
+    // Add rating if it exists
+    if(searchForKey(data, 'aggregateRating') === undefined){
+      let divRating = document.createElement('div');
+      divRating.classList.add('rating');
+      
+      let spanRating = document.createElement('span');
+      spanRating.innerHTML = 'No Reviews';
+      divRating.appendChild(spanRating);
+
+      card.appendChild(divRating);
+    }
+    else{
+      let divRating = document.createElement('div');
+      divRating.classList.add('rating');
+      
+      let spanRating = document.createElement('span');
+      spanRating.innerHTML = searchForKey(data, 'ratingValue');
+      divRating.appendChild(spanRating);
+
+      let stars = document.createElement('img');
+
+      // Get the rating number, round it, and give it the appropriate stars
+      let roundedRating = Math.round(searchForKey(data, 'ratingValue'));
+      if(roundedRating == 5){
+        stars.src = '/assets/images/icons/5-star.svg';
+      }
+      else if(roundedRating == 4){
+        stars.src = '/assets/images/icons/4-star.svg';
+      }
+      else if(roundedRating == 4){
+        stars.src = '/assets/images/icons/3-star.svg';
+      }
+      else if(roundedRating == 4){
+        stars.src = '/assets/images/icons/2-star.svg';
+      }
+      else if(roundedRating == 4){
+        stars.src = '/assets/images/icons/1-star.svg';
+      }
+      else{
+        stars.src = '/assets/images/icons/0-star.svg';
+      }
+
+      stars.alt = '5 stars';
+      divRating.appendChild(stars);
+
+      let span = document.createElement('span');
+      span.innerHTML = searchForKey(data, 'ratingCount');
+      divRating.appendChild(span);
+
+      card.appendChild(divRating);
+    }
+
+    // Add time
+    if(searchForKey(data, 'totalTime') !== undefined){
+      let time = document.createElement('time');
+      let rawTime = searchForKey(data, 'totalTime');
+      time.innerHTML = convertTime(rawTime);
+      card.appendChild(time);
+    }
+
+    // Add ingredients as a comma-separated list in <p>
+    let ingredient = document.createElement('p');
+    ingredient.classList.add('ingredients');
+    let ingredientArray = searchForKey(data, 'recipeIngredient');
+    let ingredientString = createIngredientList(ingredientArray);
+
+    ingredient.innerHTML = ingredientString;
+    card.appendChild(ingredient);
+
+    // Add style element  
+    this.shadowRoot.appendChild(styleElem);
+    this.shadowRoot.appendChild(card);
   }
 }
 
