@@ -28,7 +28,6 @@ async function init() {
     return;
   };
   // Add the first three recipe cards to the page
-  console.log(recipeData);
   createRecipeCards();
   // Make the "Show more" button functional
   bindShowMore();
@@ -75,7 +74,6 @@ function createRecipeCards() {
     element.data = recipeData[json];
 
     let main = document.querySelector('main');
-    console.log(main);
     main.appendChild(element);
   }
 }
@@ -87,7 +85,6 @@ function secondHalf(){
     element.data = recipeData[json];
 
     let main = document.querySelector('main');
-    console.log(main);
     main.appendChild(element);
   }
 }
