@@ -151,22 +151,22 @@ class RecipeCard extends HTMLElement {
       // Get the rating number, round it, and give it the appropriate stars
       let roundedRating = Math.round(searchForKey(data, 'ratingValue'));
       if(roundedRating == 5){
-        stars.src = '/assets/images/icons/5-star.svg';
+        stars.src = 'assets/images/icons/5-star.svg';
       }
       else if(roundedRating == 4){
-        stars.src = '/assets/images/icons/4-star.svg';
+        stars.src = 'assets/images/icons/4-star.svg';
       }
       else if(roundedRating == 4){
-        stars.src = '/assets/images/icons/3-star.svg';
+        stars.src = 'assets/images/icons/3-star.svg';
       }
       else if(roundedRating == 4){
-        stars.src = '/assets/images/icons/2-star.svg';
+        stars.src = 'assets/images/icons/2-star.svg';
       }
       else if(roundedRating == 4){
-        stars.src = '/assets/images/icons/1-star.svg';
+        stars.src = 'assets/images/icons/1-star.svg';
       }
       else{
-        stars.src = '/assets/images/icons/0-star.svg';
+        stars.src = 'assets/images/icons/0-star.svg';
       }
 
       stars.alt = '5 stars';
