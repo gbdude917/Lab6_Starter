@@ -117,6 +117,5 @@ function bindShowMore() {
       secondToLast.style.display = "none";
       thirdToLast.style.display = "none";
     }
-    
   });
 }
