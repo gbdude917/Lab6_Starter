@@ -148,7 +148,7 @@ class RecipeCard extends HTMLElement {
 
       let stars = document.createElement('img');
 
-      // Get the rating number, round it, and give it the appropriate stars
+      // Get the rating number, round it, and give it the appropriate star
       let roundedRating = Math.round(searchForKey(data, 'ratingValue'));
       if(roundedRating == 5){
         stars.src = 'assets/images/icons/5-star.svg';
